@@ -11,10 +11,9 @@ import re
 # print(test_r.json())
 
 
-url = 'https://free-proxy-list.net/'
+def get_proxies():
 
-
-def get_proxies(url):
+    url = 'https://free-proxy-list.net/'
 
     proxies = set()
 
@@ -43,10 +42,7 @@ def get_proxies(url):
         ip_address = ip_pattern.findall(str(td))
         port_number = port_pattern.findall(str(td))
         proxy = ':'.join(ip_address+port_number)
-        # print(proxy)
+        proxy = 'http://' + proxy
         proxies.add(proxy)
 
     return proxies
-
-
-print(get_proxies(url))
