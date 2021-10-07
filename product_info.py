@@ -21,13 +21,20 @@ def get_article(url):
     soup = BeautifulSoup(r.text, 'lxml')
 
     # Get Article Name.
-    name = soup.select_one('h1').getText()
+    if soup.select_one('h1').getText() is not None:
+        name = soup.select_one('h1').getText()
+    else:
+        name = None
 
     # Get Article Price.
-    price = soup.select_one('._1svub._lf05o.mpof_vs.munh_8.mp4t_4').getText()
-    price = price.replace(',', '.')[:-3]
-    if ' ' in price:
-        price = float(price.replace(' ', ''))
+    if soup.select_one('._1svub._lf05o.mpof_vs.munh_8.mp4t_4').getText() is not None:
+        price = soup.select_one(
+            '._1svub._lf05o.mpof_vs.munh_8.mp4t_4').getText()
+        price = price.replace(',', '.')[:-3]
+        if ' ' in price:
+            price = float(price.replace(' ', ''))
+    else:
+        price = None
 
     # Get Article statistics : number of customers and number of sales.
     if soup.select_one('._1h7wt.mgn2_13._1vryf._1t7v4') is not None:
@@ -40,10 +47,14 @@ def get_article(url):
         recent_customers = None
 
     # Get seller name and seller's percentage of positive reviews.
-    seller_data = soup.select_one('a._w7z6o._15mod._7030e_3tKtu').getText()
-    seller_data = seller_data.split('-')
-    seller_reviews = float(seller_data[1][1:-1].replace(',', '.'))
-    seller_name = seller_data[0]
+    if soup.select_one('a._w7z6o._15mod._7030e_3tKtu').getText() is not None:
+        seller_data = soup.select_one('a._w7z6o._15mod._7030e_3tKtu').getText()
+        seller_data = seller_data.split('-')
+        seller_reviews = float(seller_data[1][1:-1].replace(',', '.'))
+        seller_name = seller_data[0]
+    else:
+        seller_reviews = None
+        seller_name = None
 
     return name, float(price), seller_name, int(recent_sales), int(recent_customers), seller_reviews
 
