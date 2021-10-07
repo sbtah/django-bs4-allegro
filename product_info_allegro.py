@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 
-url = "https://allegro.pl/oferta/biurko-narozne-i-komoda-zestaw-120cm-biale-n14-10907822892"
+# url = "https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-cebuli-9569830082"
 
 
 def get_article(url):
@@ -20,9 +20,9 @@ def get_article(url):
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, 'lxml')
 
-    # Get Article's Name.
+    # Get Article's Name. !! FIND EDGE CASE OF CRASH : https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-cebuli-9569830082 !!
     if soup.select_one('h1').getText() is not None:
-        name = soup.select_one('h1').getText()
+        name = soup.select_one('h1')  # .getText()
     else:
         name = None
 
@@ -57,6 +57,3 @@ def get_article(url):
         seller_name = None
 
     return name, float(price), seller_name, int(recent_sales), int(recent_customers), seller_reviews
-
-
-print(get_article(url))
