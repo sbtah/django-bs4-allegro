@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 import lxml
 from product_info_allegro import get_article
 
+proxies = {
+    'http': 'http://62.213.14.166:8080',
+
+}
+
 url = 'https://allegro.pl/uzytkownik/skandynawskidom/wyposazenie-przybory-kuchenne-5328'
 
 headers = {
@@ -14,7 +19,7 @@ headers = {
     'Accept-CH': 'UA, Platform',
 }
 
-r = requests.get(url, headers=headers)
+r = requests.get(url, headers=headers, proxies=proxies)
 soup = BeautifulSoup(r.text, 'lxml')
 # print(soup.prettify())
 
