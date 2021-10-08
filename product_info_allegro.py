@@ -1,12 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 import lxml
-
+from get_proxy_list import get_proxies
+from itertools import cycle
+import traceback
 
 url = "https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-cebuli-9569830082"
 
 
 def get_article(url):
+
+    proxies = get_proxies()
+    proxy_pool = cycle(proxies)
+    proxy = next(proxy_pool)
+    # print(proxy)
 
     headers = {
         # 'X-Requested-With': 'XMLHttpRequest',
@@ -18,7 +25,8 @@ def get_article(url):
     }
 
     # Reads url and prepare soup file. !! ADD url valiadtion/cleaning mechanism for urls with not needed arguments !!.
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, proxies={
+                     'http': proxy, 'https': proxy})
     soup = BeautifulSoup(r.text, 'lxml')
 
     # Get Article's Name. !! FIND EDGE CASE OF CRASH : https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-cebuli-9569830082 !!
@@ -49,7 +57,8 @@ def get_article(url):
 
     # Get seller's name and seller's percentage of positive reviews.
     if soup.select_one('a._w7z6o._15mod._7030e_3tKtu').getText() is not None:
-        seller_data = soup.select_one('a._w7z6o._15mod._7030e_3tKtu').getText()
+        seller_data = soup.select_one(
+            'a._w7z6o._15mod._7030e_3tKtu').getText()
         seller_data = seller_data.split('-')
         seller_reviews = float(seller_data[1][1:-1].replace(',', '.'))
         seller_name = seller_data[0]

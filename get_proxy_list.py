@@ -18,7 +18,7 @@ def get_proxies():
     proxies = set()
 
     ip_pattern = re.compile(r'[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+')
-    port_pattern = re.compile(r'\B[0-9]{2,5}\B')
+    port_pattern = re.compile(r'[<td>][0-9][0-9]+[</td>]')
 
     headers = {
         # 'X-Requested-With': 'XMLHttpRequest',
@@ -37,12 +37,20 @@ def get_proxies():
     # print(tr)
 
     for td in tr:
+
         # print(td)
 
         ip_address = ip_pattern.findall(str(td))
+        ip_address = ip_address[0]
+        # print(type(ip_address))
+
         port_number = port_pattern.findall(str(td))
-        proxy = ':'.join(ip_address+port_number)
+        port_number = port_number[0][1:-1]
+        # print(type(port_number))
+
+        proxy = ip_address + ':' + port_number
         proxy = 'http://' + proxy
+        # print(proxy)
         proxies.add(proxy)
 
     return proxies
