@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 
-url_product_1 = "https://misioohandmade.pl/sklep/basenik-z-pilkami-velvet/?attribute_pa_kolor=liliowy&attribute_pa_ksztalt=okragly"
+url_product_1 = "https://misioohandmade.pl/sklep/basenik-z-pilkami-velvet"
 
 headers = {
     'X-Requested-With': 'XMLHttpRequest',
