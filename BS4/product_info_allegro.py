@@ -10,9 +10,9 @@ url = "https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-ceb
 
 def get_article(url):
 
-    proxies = get_proxies()
-    proxy_pool = cycle(proxies)
-    proxy = next(proxy_pool)
+    # proxies = get_proxies()
+    # proxy_pool = cycle(proxies)
+    # proxy = next(proxy_pool)
     # print(proxy)
 
     headers = {
@@ -25,8 +25,11 @@ def get_article(url):
     }
 
     # Reads url and prepare soup file. !! ADD url valiadtion/cleaning mechanism for urls with not needed arguments !!.
-    r = requests.get(url, headers=headers, proxies={
-                     'http': proxy, 'https': proxy})
+    # Connect via proxies!
+    # r = requests.get(url, headers=headers, proxies={
+    #                  'http': proxy, 'https': proxy})
+
+    r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, 'lxml')
 
     # Get Article's Name. !! FIND EDGE CASE OF CRASH : https://allegro.pl/oferta/krajalnica-szatkownica-warzyw-tarka-czosnku-cebuli-9569830082 !!

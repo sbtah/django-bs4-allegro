@@ -54,3 +54,6 @@ def get_proxies():
         proxies.add(proxy)
 
     return proxies
+
+
+# print(get_proxies())

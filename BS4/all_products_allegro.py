@@ -2,11 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 from product_info_allegro import get_article
+import time
 
-proxies = {
-    'http': 'http://62.213.14.166:8080',
-
-}
 
 url = 'https://allegro.pl/uzytkownik/skandynawskidom/wyposazenie-przybory-kuchenne-5328'
 
@@ -19,7 +16,7 @@ headers = {
     'Accept-CH': 'UA, Platform',
 }
 
-r = requests.get(url, headers=headers, proxies=proxies)
+r = requests.get(url, headers=headers)
 soup = BeautifulSoup(r.text, 'lxml')
 # print(soup.prettify())
 
@@ -29,5 +26,6 @@ all_products = soup.find_all('article')
 for product in all_products:
     # print(product)
     product_link = product.select_one('a')
-    print(product_link.get('href'))
+    # print(product_link.get('href'))
     print(get_article(product_link.get('href')))
+    time.sleep(30)
