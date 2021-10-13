@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from .utils import get_misioo_product
 
 
@@ -22,6 +23,11 @@ class Link(models.Model):
 
     def __str__(self):
         return str(self.article_name)
+
+    def get_absolute_url(self):
+        return reverse('links:product-detail', kwargs={
+            'pk': self.pk,
+        })
 
     class Meta:
 

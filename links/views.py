@@ -3,7 +3,16 @@ from .models import Link
 from .forms import AddLinkForm
 
 
+# Home Page.
 def home_view(request):
+
+    return render(request, 'links/home_view.html', {
+
+    })
+
+
+# Product List.
+def product_list(request):
 
     number_discounted = 0
     error = None
@@ -28,7 +37,7 @@ def home_view(request):
             item for item in qs if item.current_price < item.old_price]
         number_discounted = len(discount_list)
 
-    return render(request, 'links/home_view.html', {
+    return render(request, 'links/product_list.html', {
 
         'qs': qs,
         'number_of_items': number_of_items,
