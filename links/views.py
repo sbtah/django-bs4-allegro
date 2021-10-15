@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Link
 from .forms import AddLinkForm
 
@@ -26,6 +26,8 @@ def product_list(request):
             error = 'Ooops, couldnt get the name or the price'
         except:
             error = 'Something went wrong'
+
+        return redirect('links:product-list')
 
     form = AddLinkForm()
 

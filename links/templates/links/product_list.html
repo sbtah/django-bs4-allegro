@@ -1,22 +1,72 @@
 {% extends 'base.html' %}
 {% block title %}Products{% endblock title %}
 {% block content %}
-
-{% include 'links/product_form.html' %}
+<!-- Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add an Item for Tracking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="mt-2" action="" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    {{form}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container mt-5">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for q in qs %}
+    <div class="row">
+        <div class="col text-left">
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addItemModal">Add</button>
+            <button class=" btn btn-info">Update</button>
+        </div>
+        <div class="col text-right">
+            <div>
+                <p>Total number of items tracked: {{ number_of_items }}</p>
+            </div>
+            <div>
+                <p>Items discounted: {{ number_discounted }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    {% if qs %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in qs %}
         <div class="col">
-            <div class="card shadow">
-                <img src="{{ q.main_picture }}" class="card-img-top" alt="...">
+            <div class="card shadow mt-5">
+                <div class="card-header p-3">
+                    <h5 class="card-title mt-2">{{ item.article_name }}</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ q.article_name }}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                    <div>
+                        <p class="card-text">Current Price(zł):{{ item.current_price }}</p>
+                    </div>
+                    <div>
+                        <p class="card-text">Old Price(zł):{{ item.old_price }}</p>
+                    </div>
+                    <div>
+                        <p class="card-text">Difference:{{ item.price_difference }}</p>
+                    </div>
+                    <div>
+                        <a href="{{ item.url }}">Link</a>
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <h3>No items being tracked.</h3>
+    {% endif %}
 </div>
-{% endblock content %}
+{% endblock content%}
