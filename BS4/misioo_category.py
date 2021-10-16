@@ -4,12 +4,7 @@ from bs4 import BeautifulSoup
 import lxml
 
 
-# proxies = {
-#     'http': 'http://41.77.245.215:3128',
-
-# }
-
-url_mini = 'https://misioohandmade.pl/baseniki-velvet/'
+url_misio_category = 'https://misioohandmade.pl/mata-dla-dzieci-velvet/'
 
 
 headers = {
@@ -21,7 +16,7 @@ headers = {
     'Accept-CH': 'UA, Platform',
 }
 
-r = requests.get(url_mini, headers=headers)
+r = requests.get(url_misio_category, headers=headers)
 soup = BeautifulSoup(r.text, 'lxml')
 # print(soup.prettify())
 all_arts = soup.find_all(
@@ -30,4 +25,6 @@ all_arts = soup.find_all(
 # print(all_arts)  # Lista
 
 for art in all_arts:
-    print(get_misioo_product(art['href'])[1])
+    print(get_misioo_product(art['href']))
+    print("------------------------------------------------------------------")
+    print("------------------------------------------------------------------")

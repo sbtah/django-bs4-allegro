@@ -15,5 +15,5 @@ class AddLinkForm(forms.ModelForm):
         model = Link
         fields = ('url', )
         labels = {
-            'url': '',
+            'url': 'Add Product',
         }

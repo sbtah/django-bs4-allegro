@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import lxml
 
 # # https://misioohandmade.pl/sklep/page/2/
-url_product_1 = "https://misioohandmade.pl/sklep/misioo-bluza-rozpinana-z-kapturem/?attribute_pa_kolekcja=forest-leaves&attribute_pa_rozmiar=128-134"
+# url_product_1 = "https://misioohandmade.pl/sklep/misioo-bluza-rozpinana-z-kapturem/?attribute_pa_kolekcja=forest-leaves&attribute_pa_rozmiar=128-134"
 
 
 def get_misioo_product(url_product_1):
@@ -44,4 +44,4 @@ def get_misioo_product(url_product_1):
     return article_name, article_id, article_sku, float(article_price), main_picture, product_description
 
 
-print(get_misioo_product(url_product_1))
+# print(get_misioo_product(url_product_1))
