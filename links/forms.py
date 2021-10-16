@@ -5,16 +5,15 @@ from .models import Link
 
 class AddLinkForm(forms.ModelForm):
 
-    # def save(self, commit=True):
-
-    #     product = super(AddLinkForm, self).save(commit=False)
-    #     product_name = self.cleaned_data['article_name']
-    #     if Link.objects.filter(article_name=self.cleaned_data['article_name']).exists():
-    #         messages.success('Sorry Article already in Database.')
-    #     if commit:
-    #         product.save()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['url'].widget.attrs.update(
+            {'class': 'form-control', })
 
     class Meta:
 
         model = Link
         fields = ('url', )
+        labels = {
+            'url': '',
+        }
