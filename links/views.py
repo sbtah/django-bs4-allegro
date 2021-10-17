@@ -53,6 +53,17 @@ def product_list(request):
     })
 
 
+def product_detail(request, pk):
+
+    product = Link.objects.get(pk=pk)
+
+    return render(request, 'links/product_detail.html', {
+
+        'product': product,
+
+    })
+
+
 def product_delete(request, pk):
 
     product = Link.objects.get(pk=pk)
